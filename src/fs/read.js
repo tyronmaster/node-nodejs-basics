@@ -1,5 +1,5 @@
 import FS from 'fs';
-import PATH, { dirname } from 'path';
+import PATH from 'path';
 import { fileURLToPath } from 'url';
 
 
@@ -10,20 +10,20 @@ const read = async () => {
 
     /* //SIMPLE VARIANT
     FS.readFile(PATH.join(__dirname, 'files', FILE_NAME), 'utf-8', (err, data) => {
-        if (err) console.log(err);
+        if (err) throw new Error('FS operation failed');
         console.log(data);
     });
     */
 
-    // VARISNT WITH STREAMS
+    // VARIANT WITH STREAMS
     const MY_READ_STREAM = FS.createReadStream(PATH.join(__dirname, 'files', FILE_NAME), 'utf-8');
     MY_READ_STREAM.on('data', (chunk) => {
         if (chunk) console.log(chunk);
     });
     MY_READ_STREAM.on('error', (err) => {
         console.log('Error');
-        throw err;
-    })
+        throw new Error('FS operation failed');
+    });
 };
 
 await read();
