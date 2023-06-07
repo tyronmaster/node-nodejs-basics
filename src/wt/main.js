@@ -4,32 +4,13 @@ import { Worker, workerData } from 'worker_threads';
 import os from 'os';
 import { exit } from 'process';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const taskPath = path.join(__dirname, 'worker.js');
-
-const workersCount = os.availableParallelism(); //os.cpus().length;
-let inputData = 10;
-
 const performCalculations = async () => {
-    // for (let i = 1; i <= workersCount; i++) {
-    //     if (i == 8) inputData = 'test error';
-    //     const worker = new Worker(path.join(__dirname, 'worker.js'), { workerData: inputData });
-    //     worker.postMessage(inputData);
-    //     inputData++;
-    //     worker.on('message', (msg) => {
-    //         const data = { 'status': 'resolved', 'data': msg, 'workerId': worker.threadId };
-    //         result.push(data);
-    //         console.log(result);
-    //         return result;
-    //     });
-    //     worker.on('error', (err) => {
-    //         const data = { 'status': 'error', 'data': null, 'workerId': worker.threadId };
-    //         result.push(data);
-    //         console.log(result);
-    //         return result;
-    //     })
-    // }
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    const taskPath = path.join(__dirname, 'worker.js');
+    const workersCount = os.availableParallelism(); //os.cpus().length;
+    let inputData = 10;
+
     function runWorker(data) {
         return new Promise((resolve, reject) => {
             const worker = new Worker(taskPath);
